@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State var cardContents = ["🚜", "🚆", "🚌", "🚀", "🛴", "🚡", "🛥", "⚓️", "🛶", "🚁", "⛵️", "🚔", "🛸", "🚲", "🛵" ]
-    @State var cardCount = 3
+//    @State var cardCount = 3
     
     var body: some View {
         VStack {
@@ -19,7 +19,7 @@ struct ContentView: View {
                 .padding()
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(cardContents[0...cardCount], id: \.self ) { content in
+                    ForEach(cardContents, id: \.self ) { content in
                         CardView(cardContent: content)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
@@ -28,15 +28,13 @@ struct ContentView: View {
             .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/)
             Spacer()
             HStack {
-                removeCard
                 Spacer()
-                Button {
-                    cardContents.shuffle()
-                } label: {
-                    Text("Shuffle")
-                }
+                showTravelTheme
                 Spacer()
-                addCard
+                showAnimalTheme
+                Spacer()
+                showFlagTheme
+                Spacer()
             }
             .font(.largeTitle)
             .padding(.horizontal)
@@ -46,26 +44,45 @@ struct ContentView: View {
         
     }
     
-    var addCard: some View {
+    var showTravelTheme: some View {
         Button{
-            cardCount += 1
-            if cardCount > cardContents.count - 1 {
-                cardCount = cardContents.count - 1
-            }
+            cardContents = ["🚜", "🚆", "🚌", "🚀", "🛴", "🚡", "🛥", "⚓️", "🛶", "🚁", "⛵️", "🚔", "🛸", "🚲", "🛵" ]
+            cardContents.shuffle()
         } label: {
-            Image(systemName: "plus.circle.fill")
+            VStack {
+                Image(systemName: "car")
+                Text("Vehicles")
+                    .font(.body)
+                    
+            }
         }
     }
     
-    var removeCard: some View {
+    var showFlagTheme: some View {
         Button {
-            cardCount -= 1
-            if cardCount < 0 {
-                cardCount = 0
-            }
+            cardContents = ["🇧🇩", "🚩", "🇦🇫", "🇦🇽", "🇧🇷", "🇧🇦", "🇨🇫", "🇨🇳", "🇧🇸", "🇨🇨", "🏴‍☠️", "🇩🇲", "🇳🇪", "🇳🇨",  "🇲🇴", "🇱🇷", "🇱🇰", "🏴󠁧󠁢󠁥󠁮󠁧󠁿"]
+            cardContents.shuffle()
         } label: {
-            Image(systemName: "minus.circle.fill")
+            VStack {
+                Image(systemName: "flag")
+                Text("Animals")
+                    .font(.body)
+            }
+            
         }
+    }
+    
+    var showAnimalTheme: some View {
+        Button(action: {
+            cardContents = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐔", "🐒", "🦉", "🦇", "🐢", "🦀", "🦕", "🐝"]
+            cardContents.shuffle()
+        }, label: {
+            VStack {
+                Image(systemName: "hare")
+                Text("Flags")
+                    .font(.body)
+            }
+        })
     }
 }
 
